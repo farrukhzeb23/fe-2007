@@ -53,6 +53,51 @@ button {
   margin-bottom: 32px;
 }
 
+.navbar .navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navbar .navbar-actions .search-bar {
+  display: flex;
+  border: 1px solid #ffffff80;
+  border-radius: 4px;
+  padding: 10px 8px;
+  /* width: 300px; */
+  min-width: 300px;
+}
+
+.navbar .navbar-actions .search-bar input {
+  padding: 0px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  background-color: transparent;
+  color: #ffffffcc;
+}
+
+.navbar .navbar-actions .search-bar input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffffcc;
+}
+.navbar .navbar-actions .search-bar input:focus {
+  outline: none;
+}
+
+.navbar .navbar-actions button {
+  background: #ffffff;
+  border-radius: 4px;
+  border: none;
+  color: #003b44;
+  padding: 11.5px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 100%;
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
   max-width: 1184px;
