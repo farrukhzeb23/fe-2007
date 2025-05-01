@@ -226,7 +226,6 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #586069;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -279,4 +278,135 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* GistCard Styles */
+.gist-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.gist-card {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+  background-color: white;
+  position: relative;
+}
+
+.gist-card-content,
+.gist-card-footer {
+  padding: 8px;
+}
+
+.gist-card-content {
+  background-color: #fafafa;
+  overflow: hidden;
+  flex-grow: 1;
+  max-height: 182px;
+}
+
+.gist-card-code {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #24292e;
+  overflow: auto;
+}
+
+.card-pagination {
+  margin-top: 24px;
+  background-color: transparent;
+  border: none;
+}
+
+.gist-card-user {
+  display: flex;
+  gap: 8px;
+}
+
+.gist-card-user .avatar {
+  min-width: 40px;
+  height: 40px;
+}
+
+.gist-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.gist-card-title {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gist-card-author {
+  font-weight: 500;
+  color: #24292e;
+}
+
+.gist-card-name {
+  font-weight: 600;
+  color: #003b44;
+}
+
+.gist-card-timestamp,
+.gist-card-description {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 15px;
+  color: #7a7a7a;
+}
+
+.gist-card-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gist-card-actions {
+  display: none;
+}
+
+.gist-card:hover .gist-card-actions {
+  display: flex;
+}
+
+.gist-card-actions .action-button {
+  padding: 8px;
+}
+
+.gist-card .gist-card-view-file {
+  background-color: #003b44;
+  width: fit-content;
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 4px 0 0px;
+  display: none;
+}
+
+.gist-card:hover .gist-card-view-file {
+  display: block;
+}
+
+.gist-card .gist-card-view-file p {
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.gist-card .gist-card-view-file p strong {
+  font-weight: 700;
 }

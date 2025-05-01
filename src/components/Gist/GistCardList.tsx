@@ -1,9 +1,18 @@
+import GistCard from './GistCard';
+import { Gist } from '../../types';
 
-
-function GistCardList() {
-  return (
-    <div>GistCardList</div>
-  )
+interface GistCardListProps {
+  gists: Gist[];
 }
 
-export default GistCardList
+function GistCardList({ gists = [] }: GistCardListProps) {
+  return (
+    <div className="gist-card-list">
+      {gists.map((gist, index) => (
+        <GistCard key={index} gist={gist} index={index + 1} />
+      ))}
+    </div>
+  );
+}
+
+export default GistCardList;
