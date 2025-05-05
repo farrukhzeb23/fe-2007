@@ -74,12 +74,14 @@ function GistList() {
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
       <div className="gist-list-body">{renderContent()}</div>
-      <PaginationBar
-        className={paginationClassName}
-        currentPage={currentPage}
-        totalPages={14}
-        onPageChange={setCurrentPage}
-      />
+      {!loading && (
+        <PaginationBar
+          className={paginationClassName}
+          currentPage={currentPage}
+          totalPages={14}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 }
