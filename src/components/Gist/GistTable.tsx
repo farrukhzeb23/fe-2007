@@ -6,22 +6,26 @@ interface GistTableProps {
   gists?: Gist[];
 }
 
-function GistItem({ gist }: { gist: Gist }) {
+function GistItem({ gist, index }: { gist: Gist; index: number }) {
   return (
     <div className="gist-table-row">
       <div className="gist-table-cell">
         <div className="user-info">
           <div className="avatar">
-            <img src={`https://i.pravatar.cc/40?img=${gist.id}`} alt="User Avatar" />
+            <img src={`https://i.pravatar.cc/40?img=${index}`} alt="User Avatar" />
           </div>
           <span>{gist.name}</span>
         </div>
       </div>
-      <div className="gist-table-cell" title={gist.notebookName}>{gist.notebookName}</div>
+      <div className="gist-table-cell" title={gist.notebookName}>
+        {gist.notebookName}
+      </div>
       <div className="gist-table-cell">
         <span className="keyword-badge">{gist.keywords[0]}</span>
       </div>
-      <div className="gist-table-cell" title={`Updated: ${gist.updatedAt}`}>{gist.updatedAt}</div>
+      <div className="gist-table-cell" title={`Updated: ${gist.updatedAt}`}>
+        {gist.updatedAt}
+      </div>
       <div className="gist-table-cell actions">
         <button className="action-button" title="Fork">
           <img src={ForkIcon} alt="Fork" />
@@ -49,7 +53,7 @@ function GistTable({ gists = [] }: GistTableProps) {
         </div>
         <div className="gist-table-body">
           {gists.map((gist, index) => (
-            <GistItem key={index} gist={gist} />
+            <GistItem key={index} gist={gist} index={index + 1} />
           ))}
         </div>
       </div>

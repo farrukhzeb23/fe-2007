@@ -1,6 +1,7 @@
 import StarIcon from '../../assets/icons/star-24.svg';
 import ForkIcon from '../../assets/icons/repo-forked-24.svg';
 import { Gist } from '../../types';
+import CodeBlock from '../CodeBlock';
 
 type Props = {
   gist: Gist;
@@ -8,12 +9,17 @@ type Props = {
 };
 
 function GistCard({ gist, index = 1 }: Props) {
+  const determineLanguage = (fileName: string): string => {
+    const extension = fileName.split('.').pop() || '';
+    return extension;
+  };
+
+  const language = determineLanguage(gist.fileName);
+
   return (
     <div className="gist-card">
       <div className="gist-card-content">
-        <pre className="gist-card-code">
-          <code>{gist.code}</code>
-        </pre>
+        <CodeBlock code={gist.code} language={language} showLineNumbers={true} />
       </div>
 
       <div className="gist-card-footer">

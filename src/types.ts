@@ -9,4 +9,5 @@ export type Gist = {
   description: string;
   code: string;
   link: string;
+  language?: string; // Optional as we can also determine it from the filename
 };

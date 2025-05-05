@@ -415,7 +415,6 @@ button {
 }
 
 /* Loader */
-
 .gist-loader-wrapper {
   display: flex;
   flex-direction: column;
@@ -427,6 +426,101 @@ button {
   width: 100%;
   background-color: #efefef;
   border-radius: 4px;
+}
+
+/* Code Block */
+.code-content {
+  display: flex;
+  gap: 8px;
+}
+
+.line-numbers {
+  user-select: none;
+  text-align: right;
+  margin: 0;
+  color: #b7b7b7;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.code-content pre {
+  margin: 0;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.code-content pre:nth-child(2) {
+  flex-grow: 1;
+}
+
+/* Add syntax highlighting for Prism */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a737d;
+}
+
+.token.punctuation {
+  color: #24292e;
+}
+
+.token.property,
+.token.tag,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #059411;
+}
+
+.token.boolean {
+  color: #00a3ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #0072d1;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #d73a49;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #d73a49;
+}
+
+.token.function,
+.token.class-name {
+  color: #6f42c1;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e90;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
 }
 
 /* Responsive container */
