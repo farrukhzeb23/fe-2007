@@ -410,3 +410,18 @@ button {
 .gist-card .gist-card-view-file p strong {
   font-weight: 700;
 }
+
+/* Loader */
+
+.gist-loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gist-loader {
+  height: 70px;
+  width: 100%;
+  background-color: #efefef;
+  border-radius: 4px;
+}

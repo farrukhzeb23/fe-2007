@@ -2,7 +2,7 @@ import GistCard from './GistCard';
 import { Gist } from '../../types';
 
 interface GistCardListProps {
-  gists: Gist[];
+  gists?: Gist[];
 }
 
 function GistCardList({ gists = [] }: GistCardListProps) {
