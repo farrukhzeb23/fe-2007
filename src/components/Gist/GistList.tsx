@@ -41,6 +41,7 @@ function GistList() {
   const [viewMode, setViewMode] = useState<ViewMode>('table');
   const [gists, setGists] = useState<Gist[]>();
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchGists = async () => {
@@ -73,7 +74,12 @@ function GistList() {
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
       <div className="gist-list-body">{renderContent()}</div>
-      <PaginationBar className={paginationClassName} />
+      <PaginationBar
+        className={paginationClassName}
+        currentPage={currentPage}
+        totalPages={14}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }
