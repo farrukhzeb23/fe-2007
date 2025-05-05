@@ -10,6 +10,10 @@ import { getGists } from '../../api/gist.api';
 
 type ViewMode = 'table' | 'card';
 
+type Props = {
+  search: string;
+};
+
 function ViewModeToggle({
   viewMode,
   setViewMode,
@@ -37,7 +41,7 @@ function ViewModeToggle({
   );
 }
 
-function GistList() {
+function GistList({ search }: Props) {
   const [viewMode, setViewMode] = useState<ViewMode>('table');
   const [gists, setGists] = useState<Gist[]>();
   const [loading, setLoading] = useState(true);
@@ -58,11 +62,16 @@ function GistList() {
       return <GistLoader />;
     }
 
+    const filteredGists = gists?.filter(
+      (gist) =>
+        search.trim() === '' || gist.notebookName.toLowerCase().includes(search.toLowerCase())
+    );
+
     if (viewMode === 'table') {
-      return <GistTable gists={gists} />;
+      return <GistTable gists={filteredGists} />;
     }
 
-    return <GistCardList gists={gists} />;
+    return <GistCardList gists={filteredGists} />;
   };
 
   const paginationClassName = viewMode === 'card' ? 'card-pagination' : '';
