@@ -17,16 +17,16 @@ function GistItem({ gist }: { gist: Gist }) {
           <span>{gist.name}</span>
         </div>
       </div>
-      <div className="gist-table-cell">{gist.notebookName}</div>
+      <div className="gist-table-cell" title={gist.notebookName}>{gist.notebookName}</div>
       <div className="gist-table-cell">
         <span className="keyword-badge">{gist.keywords[0]}</span>
       </div>
-      <div className="gist-table-cell">{gist.updatedAt}</div>
+      <div className="gist-table-cell" title={`Updated: ${gist.updatedAt}`}>{gist.updatedAt}</div>
       <div className="gist-table-cell actions">
-        <button className="action-button">
+        <button className="action-button" title="Fork">
           <img src={ForkIcon} alt="Fork" />
         </button>
-        <button className="action-button">
+        <button className="action-button" title="Star">
           <img src={StartIcon} alt="Star" />
         </button>
       </div>

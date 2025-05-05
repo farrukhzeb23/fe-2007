@@ -64,8 +64,8 @@ button {
   border: 1px solid #ffffff80;
   border-radius: 4px;
   padding: 10px 8px;
-  /* width: 300px; */
   min-width: 300px;
+  width: 100%;
 }
 
 .navbar .navbar-actions .search-bar input {
@@ -74,6 +74,7 @@ button {
   border-radius: 4px 0 0 4px;
   background-color: transparent;
   color: #ffffffcc;
+  width: 100%;
 }
 
 .navbar .navbar-actions .search-bar input::placeholder {
@@ -122,7 +123,6 @@ button {
 
 .gist-list-wrapper .gist-list-header .gist-list-header-actions .gist-list-header-action {
   padding: 8px 12px;
-  /* background-color: #e3e3e3; */
   background-color: transparent;
   border: 1px solid #e3e3e3;
   display: flex;
@@ -149,6 +149,7 @@ button {
   border: 1px solid #e1e4e8;
   border-radius: 4px;
   overflow: hidden;
+  width: 100%;
 }
 
 .gist-table {
@@ -167,7 +168,9 @@ button {
 
 .gist-table-row {
   display: grid;
-  grid-template-columns: 200px 300px 200px 250px 234px;
+  grid-template-columns:
+    minmax(150px, 1fr) minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1.25fr)
+    minmax(100px, 1.17fr);
   border-bottom: 1px solid #e3e3e3;
 }
 
@@ -424,4 +427,115 @@ button {
   width: 100%;
   background-color: #efefef;
   border-radius: 4px;
+}
+
+/* Responsive container */
+@media screen and (max-width: 1184px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+/* Responsive styles for Gist Table */
+@media screen and (max-width: 1024px) {
+  .gist-table-row {
+    grid-template-columns: minmax(150px, 1fr) minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(
+        100px,
+        1fr
+      );
+  }
+
+  .gist-table-row .gist-table-cell:nth-child(3) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gist-table-row {
+    grid-template-columns: minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(80px, 0.8fr);
+  }
+
+  .gist-table-row .gist-table-cell:nth-child(3),
+  .gist-table-row .gist-table-cell:nth-child(4) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .gist-table-row {
+    grid-template-columns: 1fr auto;
+    padding: 8px 0;
+  }
+
+  .gist-table-row .gist-table-cell:nth-child(2),
+  .gist-table-row .gist-table-cell:nth-child(3),
+  .gist-table-row .gist-table-cell:nth-child(4) {
+    display: none;
+  }
+
+  .gist-table-cell {
+    padding: 12px 8px;
+  }
+}
+
+/* Responsive Navbar Styles */
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 16px;
+  }
+
+  .navbar .navbar-actions {
+    gap: 16px;
+  }
+
+  .navbar .navbar-actions .search-bar {
+    min-width: 200px;
+  }
+
+  .navbar .navbar-actions button {
+    padding: 10px 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .navbar .navbar-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .navbar .navbar-actions .search-bar {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .navbar .navbar-actions button {
+    width: 100%;
+  }
+}
+
+/* Responsive Gist Card List */
+@media screen and (max-width: 576px) {
+  .gist-card-list {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+
+  .gist-card {
+    width: 100%;
+  }
+
+  .gist-card-content {
+    max-height: none;
+  }
+
+  .gist-card-user .avatar {
+    min-width: 30px;
+    height: 30px;
+  }
 }
