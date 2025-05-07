@@ -64,7 +64,9 @@ function GistList({ search }: Props) {
 
     const filteredGists = gists?.filter(
       (gist) =>
-        search.trim() === '' || gist.notebookName.toLowerCase().includes(search.toLowerCase())
+        search.trim() === '' ||
+        gist.notebookName.toLowerCase().includes(search.toLowerCase()) ||
+        gist.name.toLowerCase().includes(search.toLowerCase())
     );
 
     if (viewMode === 'table') {
