@@ -1,0 +1,23 @@
+.codeContent {
+  display: flex;
+  gap: 8px;
+}
+
+.lineNumbers {
+  user-select: none;
+  text-align: right;
+  margin: 0;
+  color: #b7b7b7;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.codeContent pre {
+  margin: 0;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.codeContent pre:nth-child(2) {
+  flex-grow: 1;
+}

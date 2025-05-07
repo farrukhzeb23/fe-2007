@@ -1,5 +1,6 @@
 import GistCard from './GistCard';
 import { Gist } from '../../types';
+import styles from './GistCardList.module.css';
 
 interface GistCardListProps {
   gists?: Gist[];
@@ -7,7 +8,7 @@ interface GistCardListProps {
 
 function GistCardList({ gists = [] }: GistCardListProps) {
   return (
-    <div className="gist-card-list">
+    <div className={styles.cardList}>
       {gists.map((gist, index) => (
         <GistCard key={index} gist={gist} index={index + 1} />
       ))}

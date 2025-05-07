@@ -1,0 +1,12 @@
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.loader {
+  height: 70px;
+  width: 100%;
+  background-color: #efefef;
+  border-radius: 4px;
+}

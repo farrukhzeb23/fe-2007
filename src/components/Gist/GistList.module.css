@@ -1,0 +1,33 @@
+.gistListWrapper {
+  width: 100%;
+}
+
+.gistListHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.gistListHeader h2 {
+  font-weight: 400;
+  font-size: 25px;
+}
+
+.gistListHeaderActions {
+  display: flex;
+}
+
+.gistListHeaderAction {
+  padding: 8px 12px;
+  background-color: transparent;
+  border: 1px solid #e3e3e3;
+  display: flex;
+}
+
+.gistListHeaderAction:nth-child(1) {
+  border-radius: 4px 0 0 4px;
+}
+
+.gistListHeaderAction:nth-child(2) {
+  border-radius: 0 4px 4px 0;
+}

@@ -7,6 +7,7 @@ import PaginationBar from '../PaginationBar';
 import { Gist } from '../../types';
 import GistLoader from './GistLoader';
 import { getGists } from '../../api/gist.api';
+import styles from './GistList.module.css';
 
 type ViewMode = 'table' | 'card';
 
@@ -22,16 +23,16 @@ function ViewModeToggle({
   setViewMode: (mode: ViewMode) => void;
 }) {
   return (
-    <div className="gist-list-header-actions">
+    <div className={styles.gistListHeaderActions}>
       <button
-        className="gist-list-header-action"
+        className={styles.gistListHeaderAction}
         onClick={() => setViewMode('card')}
         style={{ backgroundColor: viewMode === 'card' ? '#e3e3e3' : 'transparent' }}
       >
         <img src={NoteIcon} alt="Card" />
       </button>
       <button
-        className="gist-list-header-action"
+        className={styles.gistListHeaderAction}
         onClick={() => setViewMode('table')}
         style={{ backgroundColor: viewMode === 'table' ? '#e3e3e3' : 'transparent' }}
       >
@@ -76,18 +77,16 @@ function GistList({ search }: Props) {
     return <GistCardList gists={filteredGists} />;
   };
 
-  const paginationClassName = viewMode === 'card' ? 'card-pagination' : '';
-
   return (
-    <div className="gist-list-wrapper">
-      <div className="gist-list-header">
+    <div className={styles.gistListWrapper}>
+      <div className={styles.gistListHeader}>
         <h2>Public Gists</h2>
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
-      <div className="gist-list-body">{renderContent()}</div>
+      <div className={styles.gistListBody}>{renderContent()}</div>
       {!loading && (
         <PaginationBar
-          className={paginationClassName}
+          className={viewMode === 'card' ? 'card-pagination' : ''}
           currentPage={currentPage}
           totalPages={14}
           onPageChange={setCurrentPage}

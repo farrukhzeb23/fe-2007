@@ -1,0 +1,97 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background-color: #003b44;
+  margin-bottom: 32px;
+}
+
+.navbarActions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.searchBar {
+  display: flex;
+  border: 1px solid #ffffff80;
+  border-radius: 4px;
+  padding: 10px 8px;
+  min-width: 300px;
+  width: 100%;
+}
+
+.searchBar input {
+  padding: 0px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  background-color: transparent;
+  color: #ffffffcc;
+  width: 100%;
+}
+
+.searchBar input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffffcc;
+}
+
+.searchBar input:focus {
+  outline: none;
+}
+
+.navbarActions button {
+  background: #ffffff;
+  border-radius: 4px;
+  border: none;
+  color: #003b44;
+  padding: 11.5px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+/* Responsive Navbar Styles */
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 16px;
+  }
+
+  .navbarActions {
+    gap: 16px;
+  }
+
+  .searchBar {
+    min-width: 200px;
+  }
+
+  .navbarActions button {
+    padding: 10px 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .navbarActions {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .searchBar {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .navbarActions button {
+    width: 100%;
+  }
+}

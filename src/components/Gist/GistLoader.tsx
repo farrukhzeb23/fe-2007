@@ -1,9 +1,11 @@
+import styles from './GistLoader.module.css';
+
 function GistLoader() {
   return (
-    <div className="gist-loader-wrapper">
-      <div className="gist-loader" />
-      <div className="gist-loader" />
-      <div className="gist-loader" />
+    <div className={styles.loaderWrapper}>
+      <div className={styles.loader} />
+      <div className={styles.loader} />
+      <div className={styles.loader} />
     </div>
   );
 }
