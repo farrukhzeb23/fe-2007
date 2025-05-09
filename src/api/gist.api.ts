@@ -1,4 +1,4 @@
-import { Gist } from '../types';
+import { Gist, AuthUser } from '../types';
 import axios from 'axios';
 
 const baseUrl = 'https://api.github.com';
@@ -20,5 +20,10 @@ export const getGists = async (params: GetGistsParams): Promise<Gist[]> => {
   const response = await api.get(
     `/gists/public?page=${params.page || 1}&per_page=${params.per_page || 14}`
   );
+  return response.data;
+};
+
+export const getUser = async (): Promise<AuthUser> => {
+  const response = await api.get('/user');
   return response.data;
 };

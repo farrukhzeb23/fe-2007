@@ -54,6 +54,7 @@ function GistList({ search }: Props) {
   useEffect(() => {
     const fetchGists = async () => {
       try {
+        setLoading(true);
         const response = await getGists({
           page: currentPage,
           per_page: TOTAL_PAGES,

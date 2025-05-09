@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import MagnifyIcon from '../../assets/icons/magnify.svg';
+import { useAuth } from '../../context/AuthContext';
 import styles from './Navbar.module.css';
 
 type Props = {
@@ -8,6 +9,16 @@ type Props = {
 };
 
 function Navbar({ search, setSearch }: Props) {
+  const { isAuthenticated, user, loading, login, logout } = useAuth();
+
+  const handleLoginLogout = () => {
+    if (isAuthenticated) {
+      logout();
+    } else {
+      login();
+    }
+  };
+
   return (
     <nav className={styles.navbar}>
       <img src="/images/logo.svg" alt="logo" className="logo" />
@@ -23,7 +34,15 @@ function Navbar({ search, setSearch }: Props) {
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
           />
         </div>
-        <button>Login</button>
+        {isAuthenticated && user ? (
+          <div>
+            <img src={user.avatar_url} alt={user.login} className={styles.userAvatar} />
+          </div>
+        ) : (
+          <button onClick={handleLoginLogout} disabled={loading}>
+            {loading ? 'Loading...' : isAuthenticated ? 'Logout' : 'Login'}
+          </button>
+        )}
       </div>
     </nav>
   );
