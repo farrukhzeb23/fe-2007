@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AuthUser } from '../types';
 import { getUser } from '../api/gist.api';
@@ -60,12 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     localStorage.removeItem('isAuthenticated');
 
-    setAuthState({
-      isAuthenticated: false,
-      user: null,
-      loading: false,
-      error: null,
-    });
+    setAuthState(initialState);
   };
 
   const checkAuth = async (): Promise<boolean> => {
