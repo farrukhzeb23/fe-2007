@@ -2,36 +2,34 @@ import { Gist } from '../../types';
 import StartIcon from '../../assets/icons/star-24.svg';
 import ForkIcon from '../../assets/icons/repo-forked-24.svg';
 import styles from './GistTable.module.css';
+import { timeElapsed } from '../../utils/date.utils';
 
 interface GistTableProps {
   gists?: Gist[];
 }
 
-function GistItem({ gist, index }: { gist: Gist; index: number }) {
+function GistItem({ gist }: { gist: Gist }) {
+  const gistFile = Object.values(gist.files)[0];
   return (
     <div className={styles.tableRow}>
       <div className={styles.tableCell}>
         <div className={styles.userInfo}>
           <div className={styles.avatar}>
-            <img src={`https://i.pravatar.cc/40?img=${index}`} alt="User Avatar" />
+            <img src={gist.owner?.avatar_url} alt={gist.owner?.login} />
           </div>
-          <span>{gist.name}</span>
+          <span>{gist.owner?.login}</span>
         </div>
       </div>
-      <div className={styles.tableCell} title={gist.notebookName}>
-        {gist.notebookName}
-      </div>
+      <div className={styles.tableCell}>{gistFile.filename}</div>
       <div className={styles.tableCell}>
-        <span className={styles.keywordBadge}>{gist.keywords[0]}</span>
+        <span className={styles.keywordBadge}>Keyword</span>
       </div>
-      <div className={styles.tableCell} title={`Updated: ${gist.updatedAt}`}>
-        {gist.updatedAt}
-      </div>
+      <div className={styles.tableCell}>Last updated {timeElapsed(new Date(gist.updated_at))}</div>
       <div className={`${styles.tableCell} ${styles.actions}`}>
-        <button className={styles.actionButton} title="Fork">
+        <button className={styles.actionButton}>
           <img src={ForkIcon} alt="Fork" />
         </button>
-        <button className={styles.actionButton} title="Star">
+        <button className={styles.actionButton}>
           <img src={StartIcon} alt="Star" />
         </button>
       </div>
@@ -54,7 +52,7 @@ function GistTable({ gists = [] }: GistTableProps) {
         </div>
         <div className={styles.tableBody}>
           {gists.map((gist, index) => (
-            <GistItem key={index} gist={gist} index={index + 1} />
+            <GistItem key={index} gist={gist} />
           ))}
         </div>
       </div>

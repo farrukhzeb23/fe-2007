@@ -10,7 +10,7 @@ function GistCardList({ gists = [] }: GistCardListProps) {
   return (
     <div className={styles.cardList}>
       {gists.map((gist, index) => (
-        <GistCard key={index} gist={gist} index={index + 1} />
+        <GistCard key={index} gist={gist} />
       ))}
     </div>
   );

@@ -1,39 +1,47 @@
 import StarIcon from '../../assets/icons/star-24.svg';
 import ForkIcon from '../../assets/icons/repo-forked-24.svg';
-import { Gist } from '../../types';
+import { Gist, GistFile } from '../../types';
 import CodeBlock from '../CodeBlock';
 import styles from './GistCard.module.css';
+import { timeElapsed } from '../../utils/date.utils';
 
 type Props = {
   gist: Gist;
-  index?: number;
 };
 
-function GistCard({ gist, index = 1 }: Props) {
+function GistCard({ gist }: Props) {
+  const gistFile = Object.values(gist.files)[0] as GistFile;
+
   const determineLanguage = (fileName: string): string => {
     const extension = fileName.split('.').pop() || '';
     return extension;
   };
 
-  const language = determineLanguage(gist.fileName);
+  const language = determineLanguage(gistFile.filename);
 
   return (
     <div className={styles.card}>
       <div className={styles.cardContent}>
-        <CodeBlock code={gist.code} language={language} showLineNumbers={true} />
+        <CodeBlock code={''} url={gistFile.raw_url} language={language} showLineNumbers={true} />
       </div>
 
       <div className={styles.cardFooter}>
         <div className={styles.cardUser}>
           <div className={styles.avatar}>
-            <img src={`https://i.pravatar.cc/40?img=${index}`} alt="User Avatar" />
+            <img src={gist.owner?.avatar_url} alt={gist.id} />
           </div>
           <div className={styles.cardInfo}>
             <div className={styles.cardTitle}>
-              <span className={styles.cardAuthor}>{gist.name} / </span>
-              <span className={styles.cardName}>{gist.notebookName}</span>
+              <span className={styles.cardAuthor}>{gist.owner?.login} / </span>
+              <span className={styles.cardName}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta dicta minima est
+                reprehenderit, eligendi ducimus voluptatum asperiores laboriosam rerum hic, nobis
+                voluptatem odio sapiente molestias consequatur tenetur ab dolorum incidunt?
+              </span>
             </div>
-            <div className={styles.cardTimestamp}>{gist.createdAt}</div>
+            <div className={styles.cardTimestamp}>
+              Created {timeElapsed(new Date(gist.created_at))}
+            </div>
             <div className={styles.cardDescription}>{gist.description}</div>
           </div>
           <div className={styles.cardActions}>
@@ -49,7 +57,7 @@ function GistCard({ gist, index = 1 }: Props) {
 
       <div className={styles.cardViewFile}>
         <p>
-          View <strong>{gist.fileName}</strong>
+          View <strong>{gistFile.filename}</strong>
         </p>
       </div>
     </div>

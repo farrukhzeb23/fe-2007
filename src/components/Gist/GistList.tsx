@@ -42,21 +42,26 @@ function ViewModeToggle({
   );
 }
 
+const TOTAL_PAGES = 6;
+
 function GistList({ search }: Props) {
-  const [viewMode, setViewMode] = useState<ViewMode>('table');
+  const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [gists, setGists] = useState<Gist[]>();
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchGists = async () => {
-      const response = await getGists();
+      const response = await getGists({
+        page: currentPage,
+        per_page: TOTAL_PAGES,
+      });
       setGists(response);
       setLoading(false);
     };
 
     fetchGists();
-  }, []);
+  }, [currentPage]);
 
   const renderContent = () => {
     if (loading) {
@@ -66,8 +71,8 @@ function GistList({ search }: Props) {
     const filteredGists = gists?.filter(
       (gist) =>
         search.trim() === '' ||
-        gist.notebookName.toLowerCase().includes(search.toLowerCase()) ||
-        gist.name.toLowerCase().includes(search.toLowerCase())
+        gist.owner?.login.toLowerCase().includes(search.toLowerCase()) ||
+        gist.description?.toLowerCase().includes(search.toLowerCase())
     );
 
     if (viewMode === 'table') {
