@@ -49,38 +49,45 @@ function GistList({ search }: Props) {
   const [gists, setGists] = useState<Gist[]>();
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchGists = async () => {
-      const response = await getGists({
-        page: currentPage,
-        per_page: TOTAL_PAGES,
-      });
-      setGists(response);
-      setLoading(false);
+      try {
+        const response = await getGists({
+          page: currentPage,
+          per_page: TOTAL_PAGES,
+        });
+
+        setGists(response);
+      } catch (error) {
+        console.error('Error fetching gists:', error);
+        setError('Failed to fetch gists. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchGists();
   }, [currentPage]);
 
-  const renderContent = () => {
-    if (loading) {
-      return <GistLoader />;
-    }
-
-    const filteredGists = gists?.filter(
-      (gist) =>
-        search.trim() === '' ||
-        gist.owner?.login.toLowerCase().includes(search.toLowerCase()) ||
-        gist.description?.toLowerCase().includes(search.toLowerCase())
+  if (loading)
+    return (
+      <div className={styles.gistListWrapper}>
+        <div className={styles.gistListBody}>
+          <GistLoader />
+        </div>
+      </div>
     );
 
-    if (viewMode === 'table') {
-      return <GistTable gists={filteredGists} />;
-    }
+  if (error) return <div className={styles.error}>{error}</div>;
 
-    return <GistCardList gists={filteredGists} />;
-  };
+  const filteredGists = gists?.filter(
+    (gist) =>
+      search.trim() === '' ||
+      gist.owner?.login.toLowerCase().includes(search.toLowerCase()) ||
+      gist.description?.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className={styles.gistListWrapper}>
@@ -88,7 +95,13 @@ function GistList({ search }: Props) {
         <h2>Public Gists</h2>
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
-      <div className={styles.gistListBody}>{renderContent()}</div>
+      <div className={styles.gistListBody}>
+        {viewMode === 'table' ? (
+          <GistTable gists={filteredGists} />
+        ) : (
+          <GistCardList gists={filteredGists} />
+        )}
+      </div>
       {!loading && (
         <PaginationBar
           className={viewMode === 'card' ? 'card-pagination' : ''}
