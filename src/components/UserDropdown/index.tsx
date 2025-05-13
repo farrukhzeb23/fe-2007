@@ -1,0 +1,67 @@
+import { AuthUser } from '../../types';
+import { useAuth } from '../../context/AuthContext';
+import styles from './UserDropdown.module.css';
+import { Link } from 'react-router';
+
+type Props = {
+  user: AuthUser;
+  onClose: () => void;
+};
+
+function UserDropdown({ user, onClose }: Props) {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    onClose();
+  };
+
+  const handleMenuItemClick = () => {
+    onClose();
+  };
+
+  return (
+    <div className={styles.dropdown}>
+      <div className={styles.userInfo}>
+        <div className={styles.userInfoText}>Signed in as</div>
+        <div
+          className={styles.userInfoText}
+          style={{ fontWeight: 700, color: '#003B44', marginBottom: '10px' }}
+        >
+          {user.name || user.login}
+        </div>
+      </div>
+
+      <ul className={styles.menuList}>
+        <li>
+          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+            Your gists
+          </a>
+        </li>
+        <li>
+          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+            Starred gists
+          </a>
+        </li>
+        <li>
+          <Link className={styles.menuItem} to="/profile" onClick={onClose}>
+            Your GitHub profile
+          </Link>
+        </li>
+        <li className={styles.menuDivider}></li>
+        <li>
+          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+            Help
+          </a>
+        </li>
+        <li>
+          <a className={styles.menuItem} onClick={handleLogout}>
+            Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+export default UserDropdown;

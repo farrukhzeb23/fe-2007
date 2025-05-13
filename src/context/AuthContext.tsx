@@ -21,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
-  loading: true,
+  loading: false,
   error: null,
 };
 

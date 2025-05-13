@@ -6,6 +6,8 @@
   border-radius: 4px;
   background-color: white;
   position: relative;
+  text-decoration: none;
+  color: #000;
 }
 
 .cardContent {

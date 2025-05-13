@@ -4,6 +4,7 @@ import { Gist, GistFile } from '../../types';
 import CodeBlock from '../CodeBlock';
 import styles from './GistCard.module.css';
 import { timeElapsed } from '../../utils/date.utils';
+import { Link } from 'react-router';
 
 type Props = {
   gist: Gist;
@@ -20,7 +21,7 @@ function GistCard({ gist }: Props) {
   const language = determineLanguage(gistFile.filename);
 
   return (
-    <div className={styles.card}>
+    <Link className={styles.card} to={`/gists/${gist.id}`}>
       <div className={styles.cardContent}>
         <CodeBlock code={''} url={gistFile.raw_url} language={language} showLineNumbers={true} />
       </div>
@@ -60,7 +61,7 @@ function GistCard({ gist }: Props) {
           View <strong>{gistFile.filename}</strong>
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 

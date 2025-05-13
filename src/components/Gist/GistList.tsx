@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import ListUnorderedIcon from '../../assets/icons/list-unordered-24.svg';
 import NoteIcon from '../../assets/icons/note-24.svg';
 import GistTable from './GistTable';
@@ -10,10 +11,6 @@ import { getGists } from '../../api/gist.api';
 import styles from './GistList.module.css';
 
 type ViewMode = 'table' | 'card';
-
-type Props = {
-  search: string;
-};
 
 function ViewModeToggle({
   viewMode,
@@ -44,12 +41,15 @@ function ViewModeToggle({
 
 const TOTAL_PAGES = 6;
 
-function GistList({ search }: Props) {
+function GistList() {
   const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [gists, setGists] = useState<Gist[]>();
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
+
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
 
   useEffect(() => {
     const fetchGists = async () => {

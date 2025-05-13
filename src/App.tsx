@@ -1,17 +1,22 @@
-import { useState } from 'react';
-import GistList from './components/Gist/GistList';
 import Navbar from './components/Navbar';
 import { AuthProvider } from './context/AuthContext';
 import styles from './App.module.css';
+import { Route, Routes } from 'react-router';
+import GistList from './components/Gist/GistList';
+import Profile from './components/Profile';
+import GistDetails from './components/GistDetails';
 
 function App() {
-  const [search, setSearch] = useState('');
   return (
     <AuthProvider>
       <div className={styles.app}>
-        <Navbar search={search} setSearch={setSearch} />
+        <Navbar />
         <main className={styles.container}>
-          <GistList search={search} />
+          <Routes>
+            <Route index element={<GistList />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/gists/:id" element={<GistDetails />} />
+          </Routes>
         </main>
       </div>
     </AuthProvider>

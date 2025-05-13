@@ -79,6 +79,7 @@ function CodeBlock({
       bash: 'bash',
       txt: 'text',
       go: 'go',
+      sql: 'sql',
     };
 
     return languageMap[type.toLowerCase()] || type.toLowerCase();
