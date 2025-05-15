@@ -1,0 +1,94 @@
+.container {
+  width: 100%;
+  max-width: 1184px;
+  margin: 0 auto;
+}
+
+.header {
+  padding: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userInfoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gistTitle {
+  margin-bottom: 4px;
+}
+
+.gistTitle span {
+  color: #003b44;
+  font-size: 14px;
+}
+
+.userInfo p {
+  color: #7a7a7a;
+  font-size: 11px;
+}
+
+.cardAuthor {
+  font-weight: 400;
+}
+
+.cardName {
+  font-weight: 600;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.codeBlockWrapper {
+  background-color: #fafafa;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+}
+
+.codeBlockHeader {
+  padding: 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+.codeBlockHeader p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #003b44;
+}
+
+.codeBlock {
+  padding: 16px;
+  overflow: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actionButtons {
+    flex: 1;
+    margin-top: 8px;
+  }
+
+  .actionButtons button {
+    flex: 1;
+  }
+}

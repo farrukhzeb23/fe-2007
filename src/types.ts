@@ -101,4 +101,5 @@ export type Gist = {
   comments_url: string;
   owner?: GistUser;
   truncated?: boolean;
+  forks: any[];
 };

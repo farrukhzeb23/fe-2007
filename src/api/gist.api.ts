@@ -23,6 +23,11 @@ export const getGists = async (params: GetGistsParams): Promise<Gist[]> => {
   return response.data;
 };
 
+export const getGist = async (id: string): Promise<Gist> => {
+  const response = await api.get(`/gists/${id}`);
+  return response.data;
+};
+
 export const getUser = async (): Promise<AuthUser> => {
   const response = await api.get('/user');
   return response.data;

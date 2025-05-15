@@ -27,6 +27,7 @@
     minmax(150px, 1fr) minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1.25fr)
     minmax(100px, 1.17fr);
   border-bottom: 1px solid #e3e3e3;
+  cursor: pointer;
 }
 
 .tableHeader .tableRow {

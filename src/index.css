@@ -103,10 +103,3 @@ button {
 .token.entity {
   cursor: help;
 }
-
-/* Responsive container */
-@media screen and (max-width: 1184px) {
-  .container {
-    padding: 0 16px;
-  }
-}

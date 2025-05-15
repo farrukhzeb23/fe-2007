@@ -3,15 +3,29 @@ import StartIcon from '../../assets/icons/star-24.svg';
 import ForkIcon from '../../assets/icons/repo-forked-24.svg';
 import styles from './GistTable.module.css';
 import { timeElapsed } from '../../utils/date.utils';
+import { useNavigate } from 'react-router';
 
 interface GistTableProps {
   gists?: Gist[];
 }
 
 function GistItem({ gist }: { gist: Gist }) {
+  const navigate = useNavigate();
+
   const gistFile = Object.values(gist.files)[0];
+
+  const handleForkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Fork clicked for gist:', gist.id);
+  };
+
+  const handleStarClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Star clicked for gist:', gist.id);
+  };
+
   return (
-    <div className={styles.tableRow}>
+    <div className={styles.tableRow} onClick={() => navigate(`/gists/${gist.id}`)} role="button">
       <div className={styles.tableCell}>
         <div className={styles.userInfo}>
           <div className={styles.avatar}>
@@ -26,10 +40,10 @@ function GistItem({ gist }: { gist: Gist }) {
       </div>
       <div className={styles.tableCell}>Last updated {timeElapsed(new Date(gist.updated_at))}</div>
       <div className={`${styles.tableCell} ${styles.actions}`}>
-        <button className={styles.actionButton}>
+        <button className={styles.actionButton} onClick={handleForkClick}>
           <img src={ForkIcon} alt="Fork" />
         </button>
-        <button className={styles.actionButton}>
+        <button className={styles.actionButton} onClick={handleStarClick}>
           <img src={StartIcon} alt="Star" />
         </button>
       </div>
