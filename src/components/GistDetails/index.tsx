@@ -90,7 +90,7 @@ function GistDetails() {
   const language = determineLanguage(gistFile.filename);
 
   return (
-    <div className={styles.container}>
+    <div>
       <GistDetailsHeader gist={gist} gistFile={gistFile} />
       <div className={styles.codeBlockWrapper}>
         <div className={styles.codeBlockHeader}>
