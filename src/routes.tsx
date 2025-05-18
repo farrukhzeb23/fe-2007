@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
-import GistList from '../components/Gist/GistList';
-import Profile from '../components/Profile';
-import GistDetails from '../components/GistDetails';
-import NotFound from '../components/NotFound';
+import GistList from './components/Gist/GistList';
+import Profile from './components/Profile';
+import GistDetails from './components/GistDetails';
+import NotFound from './components/NotFound';
 
 export interface RouteConfig {
   path: string;

@@ -3,7 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import styles from './App.module.css';
 import { Route, Routes } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoute';
-import routes from './routes/routes';
+import routes from './routes';
 
 function App() {
   return (
@@ -11,7 +11,6 @@ function App() {
       <div className={styles.app}>
         <Navbar />
         <main className={styles.container}>
-          {' '}
           <Routes>
             {routes.map((route) => (
               <Route
