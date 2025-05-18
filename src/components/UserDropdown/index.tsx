@@ -34,14 +34,14 @@ function UserDropdown({ user, onClose }: Props) {
 
       <ul className={styles.menuList}>
         <li>
-          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/gists">
             Your gists
-          </a>
+          </Link>
         </li>
         <li>
-          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/starred">
             Starred gists
-          </a>
+          </Link>
         </li>
         <li>
           <Link className={styles.menuItem} to="/profile" onClick={onClose}>
@@ -50,14 +50,14 @@ function UserDropdown({ user, onClose }: Props) {
         </li>
         <li className={styles.menuDivider}></li>
         <li>
-          <a className={styles.menuItem} onClick={handleMenuItemClick}>
+          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/settings">
             Help
-          </a>
+          </Link>
         </li>
         <li>
-          <a className={styles.menuItem} onClick={handleLogout}>
+          <Link className={styles.menuItem} onClick={handleLogout} to="!#">
             Sign out
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

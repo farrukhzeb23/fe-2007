@@ -26,7 +26,7 @@ const initialState: AuthState = {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState<AuthState>(initialState);
+  const [authState, setAuthState] = useState<AuthState>({ ...initialState, loading: true });
 
   useEffect(() => {
     checkAuth();
@@ -69,7 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (isAuth) {
       try {
-        setAuthState((prev) => ({ ...prev, loading: true }));
         const userData = await getUser();
 
         setAuthState({

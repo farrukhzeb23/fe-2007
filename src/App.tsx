@@ -2,9 +2,8 @@ import Navbar from './components/Navbar';
 import { AuthProvider } from './context/AuthContext';
 import styles from './App.module.css';
 import { Route, Routes } from 'react-router';
-import GistList from './components/Gist/GistList';
-import Profile from './components/Profile';
-import GistDetails from './components/GistDetails';
+import ProtectedRoute from './components/ProtectedRoute';
+import routes from './routes/routes';
 
 function App() {
   return (
@@ -12,10 +11,18 @@ function App() {
       <div className={styles.app}>
         <Navbar />
         <main className={styles.container}>
+          {' '}
           <Routes>
-            <Route index element={<GistList />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/gists/:id" element={<GistDetails />} />
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path === '/' ? undefined : route.path}
+                index={route.path === '/'}
+                element={
+                  route.protected ? <ProtectedRoute>{route.element}</ProtectedRoute> : route.element
+                }
+              />
+            ))}
           </Routes>
         </main>
       </div>
