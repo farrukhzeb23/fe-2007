@@ -6,6 +6,7 @@ import { Gist } from '../../types';
 import { getGists } from '../../api/gist.api';
 import GistCard from '../Gist/GistCard';
 import GistLoader from '../Gist/GistLoader';
+import { useSearchParams } from 'react-router';
 
 const TOTAL_PAGES = 6;
 
@@ -15,6 +16,8 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
 
   useEffect(() => {
     const fetchGists = async () => {
@@ -50,9 +53,16 @@ function Profile() {
       return <div className={styles.noGists}>No gists found</div>;
     }
 
+    const filteredGists = gists?.filter(
+      (gist) =>
+        search.trim() === '' ||
+        gist.owner?.login.toLowerCase().includes(search.toLowerCase()) ||
+        gist.description?.toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
       <div className={styles.gistList}>
-        {gists.map((gist) => (
+        {filteredGists.map((gist) => (
           <GistCard key={gist.id} gist={gist} />
         ))}
       </div>
