@@ -81,25 +81,29 @@ function GistDetails() {
   }
 
   const gistFile = Object.values(gist.files)[0] as GistFile;
+  const gistFiles = Object.values(gist.files);
 
   const determineLanguage = (fileName: string): string => {
     const extension = fileName.split('.').pop() || '';
     return extension;
   };
 
-  const language = determineLanguage(gistFile.filename);
-
   return (
     <div>
       <GistDetailsHeader gist={gist} gistFile={gistFile} />
-      <div className={styles.codeBlockWrapper}>
-        <div className={styles.codeBlockHeader}>
-          <p>{gistFile.filename}</p>
-        </div>
-        <div className={styles.codeBlock}>
-          <CodeBlock code={''} key={gist.id} language={language} url={gistFile.raw_url} />
-        </div>
-      </div>
+      {gistFiles.map((file) => {
+        const fileLanguage = determineLanguage(file.filename);
+        return (
+          <div key={file.filename} className={styles.codeBlockWrapper}>
+            <div className={styles.codeBlockHeader}>
+              <p>{file.filename}</p>
+            </div>
+            <div className={styles.codeBlock}>
+              <CodeBlock code={''} key={gist.id} language={fileLanguage} url={file.raw_url} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
