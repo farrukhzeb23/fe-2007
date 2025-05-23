@@ -1,5 +1,5 @@
+import { useAuthStore } from '../../stores/auth.store';
 import { AuthUser } from '../../types';
-import { useAuth } from '../../context/AuthContext';
 import styles from './UserDropdown.module.css';
 import { Link } from 'react-router';
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 function UserDropdown({ user, onClose }: Props) {
-  const { logout } = useAuth();
+  const { logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();
@@ -34,8 +34,8 @@ function UserDropdown({ user, onClose }: Props) {
 
       <ul className={styles.menuList}>
         <li>
-          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/gists">
-            Your gists
+          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/gists/create">
+            Create a gist
           </Link>
         </li>
         <li>
@@ -55,7 +55,7 @@ function UserDropdown({ user, onClose }: Props) {
           </Link>
         </li>
         <li>
-          <Link className={styles.menuItem} onClick={handleLogout} to="!#">
+          <Link className={styles.menuItem} onClick={handleLogout} to="/">
             Sign out
           </Link>
         </li>

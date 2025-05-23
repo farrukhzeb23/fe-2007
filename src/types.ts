@@ -101,5 +101,16 @@ export type Gist = {
   comments_url: string;
   owner?: GistUser;
   truncated?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forks: any[];
+};
+
+export type CreateGist = {
+  description: string;
+  public: boolean;
+  files: {
+    [key: string]: {
+      content: string;
+    };
+  };
 };

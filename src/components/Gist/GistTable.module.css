@@ -40,6 +40,15 @@
   align-items: center;
   font-size: 0.9rem;
   font-weight: 400;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .tableBody .tableRow:hover {
@@ -50,6 +59,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .avatar {
@@ -63,6 +74,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.username {
+  max-width: 100px;
 }
 
 .keywordBadge {

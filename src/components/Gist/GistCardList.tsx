@@ -4,13 +4,14 @@ import styles from './GistCardList.module.css';
 
 interface GistCardListProps {
   gists?: Gist[];
+  showActions?: boolean;
 }
 
-function GistCardList({ gists = [] }: GistCardListProps) {
+function GistCardList({ gists = [], showActions }: GistCardListProps) {
   return (
     <div className={styles.cardList}>
       {gists.map((gist, index) => (
-        <GistCard key={index} gist={gist} />
+        <GistCard key={index} gist={gist} showActions={showActions} />
       ))}
     </div>
   );

@@ -1,0 +1,13 @@
+.gistListHeader {
+  margin-bottom: 16px;
+}
+
+.gistListHeader h2 {
+  font-weight: 400;
+  font-size: 25px;
+}
+
+.body {
+  max-width: 700px;
+  margin: 0 auto;
+}

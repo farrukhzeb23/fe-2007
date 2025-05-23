@@ -7,9 +7,10 @@ import { useNavigate } from 'react-router';
 
 interface GistTableProps {
   gists?: Gist[];
+  showActions?: boolean;
 }
 
-function GistItem({ gist }: { gist: Gist }) {
+function GistItem({ gist, showActions = true }: { gist: Gist; showActions?: boolean }) {
   const navigate = useNavigate();
 
   const gistFile = Object.values(gist.files)[0];
@@ -28,45 +29,63 @@ function GistItem({ gist }: { gist: Gist }) {
     <div className={styles.tableRow} onClick={() => navigate(`/gists/${gist.id}`)} role="button">
       <div className={styles.tableCell}>
         <div className={styles.userInfo}>
+          {' '}
           <div className={styles.avatar}>
             <img src={gist.owner?.avatar_url} alt={gist.owner?.login} />
           </div>
-          <span>{gist.owner?.login}</span>
+          <span className={styles.truncate}>{gist.owner?.login}</span>
         </div>
       </div>
-      <div className={styles.tableCell}>{gistFile.filename}</div>
+      <div className={styles.tableCell}>
+        <span className={styles.truncate}>{gistFile.filename}</span>
+      </div>
       <div className={styles.tableCell}>
         <span className={styles.keywordBadge}>Keyword</span>
       </div>
-      <div className={styles.tableCell}>Last updated {timeElapsed(new Date(gist.updated_at))}</div>
-      <div className={`${styles.tableCell} ${styles.actions}`}>
-        <button className={styles.actionButton} onClick={handleForkClick}>
-          <img src={ForkIcon} alt="Fork" />
-        </button>
-        <button className={styles.actionButton} onClick={handleStarClick}>
-          <img src={StartIcon} alt="Star" />
-        </button>
+      <div className={styles.tableCell}>
+        <span className={styles.truncate}>
+          Last updated {timeElapsed(new Date(gist.updated_at))}
+        </span>
       </div>
+      {showActions && (
+        <div className={`${styles.tableCell} ${styles.actions}`}>
+          <button className={styles.actionButton} onClick={handleForkClick}>
+            <img src={ForkIcon} alt="Fork" />
+          </button>
+          <button className={styles.actionButton} onClick={handleStarClick}>
+            <img src={StartIcon} alt="Star" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
 
-function GistTable({ gists = [] }: GistTableProps) {
+function GistTable({ gists = [], showActions = true }: GistTableProps) {
   return (
     <div className={styles.tableWrapper}>
+      {' '}
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <div className={styles.tableRow}>
-            <div className={styles.tableCell}>Name</div>
-            <div className={styles.tableCell}>Notebook Name</div>
-            <div className={styles.tableCell}>Keyword</div>
-            <div className={styles.tableCell}>Updated</div>
+            <div className={styles.tableCell}>
+              <span className={styles.truncate}>Name</span>
+            </div>
+            <div className={styles.tableCell}>
+              <span className={styles.truncate}>Notebook Name</span>
+            </div>
+            <div className={styles.tableCell}>
+              <span className={styles.truncate}>Keyword</span>
+            </div>
+            <div className={styles.tableCell}>
+              <span className={styles.truncate}>Updated</span>
+            </div>
             <div className={`${styles.tableCell} ${styles.actions}`}></div>
           </div>
         </div>
         <div className={styles.tableBody}>
           {gists.map((gist, index) => (
-            <GistItem key={index} gist={gist} />
+            <GistItem key={index} gist={gist} showActions={showActions} />
           ))}
         </div>
       </div>

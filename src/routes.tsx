@@ -3,6 +3,7 @@ import GistList from './components/Gist/GistList';
 import Profile from './components/Profile';
 import GistDetails from './components/GistDetails';
 import NotFound from './components/NotFound';
+import { CreateGist } from './components/CreateGist';
 
 export interface RouteConfig {
   path: string;
@@ -25,6 +26,11 @@ const routes: RouteConfig[] = [
     path: '/gists/:id',
     element: <GistDetails />,
     protected: false,
+  },
+  {
+    path: '/gists/create',
+    element: <CreateGist />,
+    protected: true,
   },
   {
     path: '*',

@@ -1,52 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useState } from 'react';
 import PaginationBar from '../PaginationBar';
 import styles from './Profile.module.css';
-import { Gist } from '../../types';
-import { getGists } from '../../api/gist.api';
 import GistCard from '../Gist/GistCard';
 import GistLoader from '../Gist/GistLoader';
 import { useSearchParams } from 'react-router';
+import { useAuthStore } from '../../stores/auth.store';
+import { useGetUserGists } from '../../hooks/useGetUserGists';
 
 const TOTAL_PAGES = 6;
 
 function Profile() {
-  const { user } = useAuth();
-  const [gists, setGists] = useState<Gist[]>();
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuthStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const [error, setError] = useState<string | null>(null);
+  const { data: gists, isLoading, error } = useGetUserGists(currentPage, TOTAL_PAGES);
   const [searchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
 
-  useEffect(() => {
-    const fetchGists = async () => {
-      try {
-        setLoading(true);
-        const response = await getGists({
-          page: currentPage,
-          per_page: TOTAL_PAGES,
-        });
-
-        setGists(response);
-      } catch (error) {
-        console.error('Error fetching gists:', error);
-        setError('Failed to fetch gists. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGists();
-  }, [currentPage]);
-
   function renderContent() {
-    if (loading) {
+    if (isLoading) {
       return <GistLoader />;
     }
 
     if (error) {
-      return <div className={styles.error}>{error}</div>;
+      return <div className={styles.error}>{error.message || 'Unable to fetch gists'}</div>;
     }
 
     if (!gists || gists.length === 0) {
@@ -63,11 +39,13 @@ function Profile() {
     return (
       <div className={styles.gistList}>
         {filteredGists.map((gist) => (
-          <GistCard key={gist.id} gist={gist} />
+          <GistCard key={gist.id} gist={gist} showActions={false} />
         ))}
       </div>
     );
   }
+
+  const showPagination = gists && !isLoading && gists.length > TOTAL_PAGES;
 
   return (
     <div className={styles.profileWrapper}>
@@ -88,12 +66,14 @@ function Profile() {
           <h2>All Gists</h2>
         </div>
         {renderContent()}
-        <PaginationBar
-          className={'card-pagination'}
-          currentPage={currentPage}
-          totalPages={14}
-          onPageChange={setCurrentPage}
-        />
+        {showPagination && (
+          <PaginationBar
+            className={'card-pagination'}
+            currentPage={currentPage}
+            totalPages={14}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
     </div>
   );

@@ -8,9 +8,10 @@ import { Link } from 'react-router';
 
 type Props = {
   gist: Gist;
+  showActions?: boolean;
 };
 
-function GistCard({ gist }: Props) {
+function GistCard({ gist, showActions = true }: Props) {
   const gistFile = Object.values(gist.files)[0] as GistFile;
 
   const determineLanguage = (fileName: string): string => {
@@ -34,25 +35,23 @@ function GistCard({ gist }: Props) {
           <div className={styles.cardInfo}>
             <div className={styles.cardTitle}>
               <span className={styles.cardAuthor}>{gist.owner?.login} / </span>
-              <span className={styles.cardName}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta dicta minima est
-                reprehenderit, eligendi ducimus voluptatum asperiores laboriosam rerum hic, nobis
-                voluptatem odio sapiente molestias consequatur tenetur ab dolorum incidunt?
-              </span>
+              <span className={styles.cardName}>{gistFile.filename}</span>
             </div>
             <div className={styles.cardTimestamp}>
               Created {timeElapsed(new Date(gist.created_at))}
             </div>
             <div className={styles.cardDescription}>{gist.description}</div>
           </div>
-          <div className={styles.cardActions}>
-            <button className={styles.actionButton}>
-              <img src={ForkIcon} alt="Fork" />
-            </button>
-            <button className={styles.actionButton}>
-              <img src={StarIcon} alt="Star" />
-            </button>
-          </div>
+          {showActions && (
+            <div className={styles.cardActions}>
+              <button className={styles.actionButton}>
+                <img src={ForkIcon} alt="Fork" />
+              </button>
+              <button className={styles.actionButton}>
+                <img src={StarIcon} alt="Star" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

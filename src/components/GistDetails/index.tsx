@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { getGist } from '../../api/gist.api';
 import { Gist, GistFile } from '../../types';
 import styles from './GistDetails.module.css';
 import CodeBlock from '../CodeBlock';
@@ -8,8 +6,11 @@ import { timeElapsed } from '../../utils/date.utils';
 import ActionButton from './ActionButton';
 import ForkIcon from '../../assets/icons/repo-fork-white.svg';
 import StarIcon from '../../assets/icons/star-white.svg';
+import { useGetGist } from '../../hooks/useGetGist';
+import { useAuthStore } from '../../stores/auth.store';
 
 function GistDetailsHeader({ gist, gistFile }: { gist: Gist; gistFile: GistFile }) {
+  const { isAuthenticated } = useAuthStore();
   return (
     <div className={styles.header}>
       <div className={styles.userInfoWrapper}>
@@ -23,57 +24,40 @@ function GistDetailsHeader({ gist, gistFile }: { gist: Gist; gistFile: GistFile 
           <p>{gist.description}</p>
         </div>
       </div>
-      <div className={styles.actionButtons}>
-        <ActionButton
-          icon={ForkIcon}
-          label="Fork"
-          onClick={() => {
-            console.log('Fork clicked');
-          }}
-          count={gist.forks.length}
-        />
-        <ActionButton
-          icon={StarIcon}
-          label="Star"
-          onClick={() => {
-            console.log('Star clicked');
-          }}
-          count={gist.forks.length}
-        />
-      </div>
+      {isAuthenticated && (
+        <div className={styles.actionButtons}>
+          <ActionButton
+            icon={ForkIcon}
+            label="Fork"
+            onClick={() => {
+              console.log('Fork clicked');
+            }}
+            count={gist.forks.length}
+          />
+          <ActionButton
+            icon={StarIcon}
+            label="Star"
+            onClick={() => {
+              console.log('Star clicked');
+            }}
+            count={gist.forks.length}
+          />
+        </div>
+      )}
     </div>
   );
 }
 
 function GistDetails() {
   const { id } = useParams();
-  const [loader, setLoader] = useState(true);
-  const [err, setError] = useState<string | null>();
-  const [gist, setGist] = useState<Gist | null>(null);
+  const { data: gist, error, isLoading } = useGetGist(id as string);
 
-  useEffect(() => {
-    const fetchGistDetails = async () => {
-      try {
-        const response = await getGist(id as string);
-        setGist(response);
-      } catch {
-        setError('Failed to fetch gist details');
-      } finally {
-        setLoader(false);
-      }
-    };
-
-    if (id) {
-      fetchGistDetails();
-    }
-  }, [id]);
-
-  if (loader) {
+  if (isLoading) {
     return <div className={styles.loader}>Loading...</div>;
   }
 
-  if (err) {
-    return <div className={styles.error}>{err}</div>;
+  if (error) {
+    return <div className={styles.error}>{error.message || 'Error while fetching gist'}</div>;
   }
 
   if (!gist) {

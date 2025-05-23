@@ -1,0 +1,102 @@
+.form input,
+.form textarea {
+  border: 1px solid #a3a3a3;
+  padding: 10px 0 10px 8px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.form > input {
+  margin-bottom: 16px;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+}
+
+.form textarea {
+  resize: none;
+  width: 100%;
+  height: 200px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom: 1px solid #efefef;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
+  border-top: none;
+}
+
+.form input::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #b7b7b7;
+}
+
+.textEditorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.textEditor {
+  display: flex;
+  flex-direction: column;
+}
+
+.textEditorHeader {
+  background-color: #fafafa;
+  padding: 10px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top: 1px solid #efefef;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.textEditorHeader input {
+  max-width: 250px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.buttonGroup button {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 32px;
+  border-radius: 4px;
+}
+
+.addFileBtn {
+  background-color: #efefef;
+  color: #003b44;
+}
+
+.submitBtn {
+  background-color: #003b44;
+  color: #ffffff;
+}
+
+.removeFileBtn {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.errorInput {
+  border: 1px solid #ff0000 !important;
+}
+
+.errorInput::placeholder {
+  color: #ff0000 !important;
+}
