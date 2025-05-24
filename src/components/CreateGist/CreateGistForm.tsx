@@ -2,9 +2,9 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate } from 'react-router';
-import { useCreateGist } from '../../hooks/useCreateGist';
 import styles from './CreateGistForm.module.css';
 import TrashIcon from '../../assets/icons/trash-24.svg';
+import { useCreateGist } from '../../queries/gist';
 
 const gistFileSchema = z.object({
   filename: z.string().min(1, 'Filename is required'),

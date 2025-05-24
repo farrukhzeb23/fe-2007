@@ -7,7 +7,7 @@ import GistCardList from './GistCardList';
 import PaginationBar from '../PaginationBar';
 import GistLoader from './GistLoader';
 import styles from './GistList.module.css';
-import { useGetGists } from '../../hooks/useGetGists';
+import { useGetGists } from '../../queries/gist';
 import { useAuthStore } from '../../stores/auth.store';
 
 type ViewMode = 'table' | 'card';

@@ -6,11 +6,29 @@ import { timeElapsed } from '../../utils/date.utils';
 import ActionButton from './ActionButton';
 import ForkIcon from '../../assets/icons/repo-fork-white.svg';
 import StarIcon from '../../assets/icons/star-white.svg';
-import { useGetGist } from '../../hooks/useGetGist';
+import { useForkGist, useGetGist, useStarGist } from '../../queries/gist';
 import { useAuthStore } from '../../stores/auth.store';
 
 function GistDetailsHeader({ gist, gistFile }: { gist: Gist; gistFile: GistFile }) {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
+  const { mutate: mutateForkGist, isPending: isForking } = useForkGist();
+  const { mutate: mutateStarGist, isPending: isStaring } = useStarGist();
+
+  const handleForkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    mutateForkGist(gist.id);
+  };
+
+  const handleStarClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    mutateStarGist(gist.id);
+  };
+
+  // Cannot fork or star if it's the user's own gist
+  const isOwner = user?.id === gist.owner?.id;
+
   return (
     <div className={styles.header}>
       <div className={styles.userInfoWrapper}>
@@ -24,23 +42,21 @@ function GistDetailsHeader({ gist, gistFile }: { gist: Gist; gistFile: GistFile 
           <p>{gist.description}</p>
         </div>
       </div>
-      {isAuthenticated && (
+      {isAuthenticated && !isOwner && (
         <div className={styles.actionButtons}>
           <ActionButton
             icon={ForkIcon}
             label="Fork"
-            onClick={() => {
-              console.log('Fork clicked');
-            }}
+            onClick={handleForkClick}
             count={gist.forks.length}
+            disabled={isForking}
           />
           <ActionButton
             icon={StarIcon}
             label="Star"
-            onClick={() => {
-              console.log('Star clicked');
-            }}
+            onClick={handleStarClick}
             count={gist.forks.length}
+            disabled={isStaring}
           />
         </div>
       )}

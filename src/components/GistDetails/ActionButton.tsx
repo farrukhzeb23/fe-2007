@@ -5,12 +5,24 @@ export interface ActionButtonProps {
   icon: string;
   label: string;
   count: number;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
+  disabled?: boolean;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({ icon, label, count, onClick }) => {
+const ActionButton: React.FC<ActionButtonProps> = ({
+  icon,
+  label,
+  count,
+  onClick,
+  disabled = false,
+}) => {
   return (
-    <button className={styles.actionButton} onClick={onClick} aria-label={`${label}: ${count}`}>
+    <button
+      className={styles.actionButton}
+      onClick={onClick}
+      aria-label={`${label}: ${count}`}
+      disabled={disabled}
+    >
       <div className={styles.leftSection}>
         <span className={styles.icon}>
           <img src={icon} alt={label} />

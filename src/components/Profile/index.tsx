@@ -5,7 +5,7 @@ import GistCard from '../Gist/GistCard';
 import GistLoader from '../Gist/GistLoader';
 import { useSearchParams } from 'react-router';
 import { useAuthStore } from '../../stores/auth.store';
-import { useGetUserGists } from '../../hooks/useGetUserGists';
+import { useGetUserGists } from '../../queries/gist';
 
 const TOTAL_PAGES = 6;
 
@@ -45,7 +45,7 @@ function Profile() {
     );
   }
 
-  const showPagination = gists && !isLoading && gists.length > TOTAL_PAGES;
+  const showPagination = gists && !isLoading;
 
   return (
     <div className={styles.profileWrapper}>

@@ -4,6 +4,7 @@ import ForkIcon from '../../assets/icons/repo-forked-24.svg';
 import styles from './GistTable.module.css';
 import { timeElapsed } from '../../utils/date.utils';
 import { useNavigate } from 'react-router';
+import { useForkGist, useStarGist } from '../../queries/gist';
 
 interface GistTableProps {
   gists?: Gist[];
@@ -12,24 +13,25 @@ interface GistTableProps {
 
 function GistItem({ gist, showActions = true }: { gist: Gist; showActions?: boolean }) {
   const navigate = useNavigate();
+  const { mutate: mutateForkGist, isPending: isForking } = useForkGist();
+  const { mutate: mutateStarGist, isPending: isStaring } = useStarGist();
 
   const gistFile = Object.values(gist.files)[0];
 
   const handleForkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log('Fork clicked for gist:', gist.id);
+    mutateForkGist(gist.id);
   };
 
   const handleStarClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log('Star clicked for gist:', gist.id);
+    mutateStarGist(gist.id);
   };
 
   return (
     <div className={styles.tableRow} onClick={() => navigate(`/gists/${gist.id}`)} role="button">
       <div className={styles.tableCell}>
         <div className={styles.userInfo}>
-          {' '}
           <div className={styles.avatar}>
             <img src={gist.owner?.avatar_url} alt={gist.owner?.login} />
           </div>
@@ -49,10 +51,10 @@ function GistItem({ gist, showActions = true }: { gist: Gist; showActions?: bool
       </div>
       {showActions && (
         <div className={`${styles.tableCell} ${styles.actions}`}>
-          <button className={styles.actionButton} onClick={handleForkClick}>
+          <button className={styles.actionButton} onClick={handleForkClick} disabled={isForking}>
             <img src={ForkIcon} alt="Fork" />
           </button>
-          <button className={styles.actionButton} onClick={handleStarClick}>
+          <button className={styles.actionButton} onClick={handleStarClick} disabled={isStaring}>
             <img src={StartIcon} alt="Star" />
           </button>
         </div>
@@ -64,7 +66,6 @@ function GistItem({ gist, showActions = true }: { gist: Gist; showActions?: bool
 function GistTable({ gists = [], showActions = true }: GistTableProps) {
   return (
     <div className={styles.tableWrapper}>
-      {' '}
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <div className={styles.tableRow}>

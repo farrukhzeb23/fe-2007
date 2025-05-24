@@ -5,6 +5,7 @@ import CodeBlock from '../CodeBlock';
 import styles from './GistCard.module.css';
 import { timeElapsed } from '../../utils/date.utils';
 import { Link } from 'react-router';
+import { useForkGist, useStarGist } from '../../queries/gist';
 
 type Props = {
   gist: Gist;
@@ -12,11 +13,23 @@ type Props = {
 };
 
 function GistCard({ gist, showActions = true }: Props) {
+  const { mutate: mutateForkGist, isPending: isForking } = useForkGist();
+  const { mutate: mutateStarGist, isPending: isStaring } = useStarGist();
   const gistFile = Object.values(gist.files)[0] as GistFile;
 
   const determineLanguage = (fileName: string): string => {
     const extension = fileName.split('.').pop() || '';
     return extension;
+  };
+  const handleForkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    mutateForkGist(gist.id);
+  };
+  const handleStarClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    mutateStarGist(gist.id);
   };
 
   const language = determineLanguage(gistFile.filename);
@@ -44,10 +57,18 @@ function GistCard({ gist, showActions = true }: Props) {
           </div>
           {showActions && (
             <div className={styles.cardActions}>
-              <button className={styles.actionButton}>
+              <button
+                className={styles.actionButton}
+                onClick={handleForkClick}
+                disabled={isForking}
+              >
                 <img src={ForkIcon} alt="Fork" />
               </button>
-              <button className={styles.actionButton}>
+              <button
+                className={styles.actionButton}
+                onClick={handleStarClick}
+                disabled={isStaring}
+              >
                 <img src={StarIcon} alt="Star" />
               </button>
             </div>

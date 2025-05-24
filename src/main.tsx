@@ -9,8 +9,11 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1, // Retry failed requests once
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+    mutations: {
+      retry: false, // Do not retry mutations
     },
   },
 });
