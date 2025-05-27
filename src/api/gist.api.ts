@@ -1,18 +1,28 @@
 import { Gist, AuthUser, CreateGist } from '../types';
 import axios from 'axios';
+import { useAuthStore } from '../stores/auth.store';
 
 const baseUrl = 'https://api.github.com';
 
-const authState = JSON.parse(localStorage.getItem('auth-storage') || '{}') as {
-  token: string | null;
-};
-
+// Create the API instance
 const api = axios.create({
   baseURL: baseUrl,
   headers: {
     'Content-Type': 'application/json',
-    ...(authState.token ? { Authorization: `Bearer ${authState.token}` } : {}),
   },
+});
+
+// Add a request interceptor to dynamically include the token from the auth store
+api.interceptors.request.use((config) => {
+  // Get the current auth state with each request
+  const token = useAuthStore.getState().token;
+
+  // If token exists, add it to the Authorization header
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 });
 
 type GetGistsParams = {
@@ -44,8 +54,12 @@ export const createGist = async (data: CreateGist): Promise<Gist> => {
   return response.data;
 };
 
-export const getUser = async (): Promise<AuthUser> => {
-  const response = await api.get('/user');
+export const getUser = async (accessToken: string): Promise<AuthUser> => {
+  const response = await api.get('/user', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return response.data;
 };
 

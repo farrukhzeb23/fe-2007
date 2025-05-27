@@ -50,10 +50,10 @@ function Profile() {
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.leftSection}>
-        <img src={user?.photoURL || ''} alt={user?.displayName || ''} />
-        <h2>{user?.displayName}</h2>
+        <img src={user?.avatar_url} alt={user?.login} />
+        <h2>{user?.login}</h2>
         <a
-          href={`https://www.github.com/${user?.displayName}`}
+          href={user?.html_url}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.githubLink}

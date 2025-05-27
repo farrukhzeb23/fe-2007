@@ -8,24 +8,23 @@ import { useEffect } from 'react';
 import { getUser } from './api/gist.api';
 
 function App() {
-  const { isAuthenticated, setUser, setError, setLoading } = useAuthStore();
+  const { isAuthenticated, setUser, setError, setLoading, token } = useAuthStore();
 
   useEffect(() => {
     const checkAuth = async (): Promise<void> => {
-      if (isAuthenticated) {
+      if (isAuthenticated && token) {
         try {
           setLoading(true);
-          const userData = await getUser();
+          const userData = await getUser(token);
 
           setUser(userData);
           setError(null);
         } catch (error) {
           console.error('Error checking authentication:', error);
           setError('Authentication failed. Please check your token.');
-        } finally {
-          setLoading(false);
         }
       }
+      setLoading(false);
     };
     checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps

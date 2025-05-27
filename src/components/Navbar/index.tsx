@@ -6,6 +6,7 @@ import styles from './Navbar.module.css';
 import { useAuthStore } from '../../stores/auth.store';
 import { auth, provider, signInWithPopup, signOut } from '../../api/firebase';
 import { GithubAuthProvider } from 'firebase/auth';
+import { getUser } from '../../api/gist.api';
 
 function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,11 +31,10 @@ function Navbar() {
       setError(null);
       const result = await signInWithPopup(auth, provider);
       const credential = GithubAuthProvider.credentialFromResult(result);
-      const userData = result.user;
 
       if (!credential?.accessToken) throw new Error('No access token received');
 
-      console.log(credential);
+      const userData = await getUser(credential.accessToken);
 
       setUser(userData);
       setAuthenticated(true);
@@ -46,11 +46,11 @@ function Navbar() {
       setLoading(false);
     }
   };
-
   const logout = async () => {
     await signOut(auth);
     setUser(null);
     setAuthenticated(false);
+    setToken('');
   };
 
   const handleLoginLogout = () => {
@@ -125,8 +125,8 @@ function Navbar() {
           <div className={styles.userContainer}>
             <img
               ref={avatarRef}
-              src={user?.photoURL || '/images/default-avatar.png'}
-              alt={user.displayName || 'User Avatar'}
+              src={user.avatar_url}
+              alt={user.login}
               className={styles.userAvatar}
               onClick={toggleDropdown}
             />

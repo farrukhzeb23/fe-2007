@@ -1,5 +1,5 @@
 import { useAuthStore } from '../../stores/auth.store';
-import { User as AuthUser } from 'firebase/auth';
+import { AuthUser } from '../../types';
 import styles from './UserDropdown.module.css';
 import { Link } from 'react-router';
 
@@ -28,7 +28,7 @@ function UserDropdown({ user, onClose }: Props) {
           className={styles.userInfoText}
           style={{ fontWeight: 700, color: '#003B44', marginBottom: '10px' }}
         >
-          {user.displayName}
+          {user.login}
         </div>
       </div>
 
