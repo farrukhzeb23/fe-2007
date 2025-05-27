@@ -3,11 +3,15 @@ import axios from 'axios';
 
 const baseUrl = 'https://api.github.com';
 
+const authState = JSON.parse(localStorage.getItem('auth-storage') || '{}') as {
+  token: string | null;
+};
+
 const api = axios.create({
   baseURL: baseUrl,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${import.meta.env.VITE_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+    ...(authState.token ? { Authorization: `Bearer ${authState.token}` } : {}),
   },
 });
 

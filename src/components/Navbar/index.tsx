@@ -4,7 +4,8 @@ import MagnifyIcon from '../../assets/icons/magnify.svg';
 import UserDropdown from '../UserDropdown';
 import styles from './Navbar.module.css';
 import { useAuthStore } from '../../stores/auth.store';
-import { getUser } from '../../api/gist.api';
+import { auth, provider, signInWithPopup, signOut } from '../../api/firebase';
+import { GithubAuthProvider } from 'firebase/auth';
 
 function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -12,30 +13,42 @@ function Navbar() {
   const avatarRef = useRef<HTMLImageElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('search') || '');
-  const { setUser, setAuthenticated, setError, setLoading, isAuthenticated, isLoading, user } =
-    useAuthStore();
+  const {
+    setUser,
+    setAuthenticated,
+    setError,
+    setLoading,
+    setToken,
+    isAuthenticated,
+    isLoading,
+    user,
+  } = useAuthStore();
 
   const login = async () => {
     try {
       setLoading(true);
       setError(null);
+      const result = await signInWithPopup(auth, provider);
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      const userData = result.user;
 
-      const userData = await getUser();
+      if (!credential?.accessToken) throw new Error('No access token received');
+
+      console.log(credential);
 
       setUser(userData);
       setAuthenticated(true);
+      setToken(credential.accessToken);
     } catch (error) {
-      setError('Authentication failed. Please check your token.');
-
+      setError('Authentication failed. Please check your GitHub login.');
       console.error('Login error:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('isAuthenticated');
-
+  const logout = async () => {
+    await signOut(auth);
     setUser(null);
     setAuthenticated(false);
   };
@@ -112,8 +125,8 @@ function Navbar() {
           <div className={styles.userContainer}>
             <img
               ref={avatarRef}
-              src={user.avatar_url}
-              alt={user.login}
+              src={user?.photoURL || '/images/default-avatar.png'}
+              alt={user.displayName || 'User Avatar'}
               className={styles.userAvatar}
               onClick={toggleDropdown}
             />
