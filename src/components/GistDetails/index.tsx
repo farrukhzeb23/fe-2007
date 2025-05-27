@@ -27,7 +27,7 @@ function GistDetailsHeader({ gist, gistFile }: { gist: Gist; gistFile: GistFile 
   };
 
   // Cannot fork or star if it's the user's own gist
-  const isOwner = user?.uid === gist.owner?.id;
+  const isOwner = user?.id === gist.owner?.id;
 
   return (
     <div className={styles.header}>
