@@ -1,5 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createGist, forkGist, getGist, getGists, getUserGists, starGist } from '../api/gist.api';
+import {
+  createGist,
+  forkGist,
+  getGist,
+  getGists,
+  getUserGists,
+  getUserStarredGists,
+  starGist,
+} from '../api/gist.api';
 import { CreateGist, Gist } from '../types';
 
 export const useCreateGist = () => {
@@ -100,5 +108,12 @@ export const useStarGist = () => {
       await queryClient.invalidateQueries({ queryKey: ['gist', context.gistId] });
       await queryClient.invalidateQueries({ queryKey: ['gists'] });
     },
+  });
+};
+
+export const useGetUserStarredGists = (page: number = 1, perPage: number = 14) => {
+  return useQuery<Gist[]>({
+    queryKey: ['user-starred-gists', page, perPage],
+    queryFn: () => getUserStarredGists({ page, per_page: perPage }),
   });
 };

@@ -1,0 +1,11 @@
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.starredGistsWrapper h2 {
+  font-weight: 400;
+  font-size: 25px;
+  margin-bottom: 16px;
+}

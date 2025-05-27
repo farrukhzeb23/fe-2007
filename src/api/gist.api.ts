@@ -54,3 +54,10 @@ export const starGist = async (id: string): Promise<Gist> => {
   const response = await api.put(`/gists/${id}/star`);
   return response.data;
 };
+
+export const getUserStarredGists = async (params: GetGistsParams): Promise<Gist[]> => {
+  const response = await api.get(
+    `/gists/starred?page=${params.page || 1}&per_page=${params.per_page || 14}`
+  );
+  return response.data;
+};

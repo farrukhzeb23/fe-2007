@@ -39,7 +39,7 @@ function UserDropdown({ user, onClose }: Props) {
           </Link>
         </li>
         <li>
-          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/starred">
+          <Link className={styles.menuItem} onClick={handleMenuItemClick} to="/gists/starred">
             Starred gists
           </Link>
         </li>
