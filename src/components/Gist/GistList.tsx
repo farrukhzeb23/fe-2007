@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router';
 import ListUnorderedIcon from '../../assets/icons/list-unordered-24.svg';
 import NoteIcon from '../../assets/icons/note-24.svg';
 import GistTable from './GistTable';
 import GistCardList from './GistCardList';
-import PaginationBar from '../PaginationBar';
-import GistLoader from './GistLoader';
 import styles from './GistList.module.css';
 import { useGetGists } from '../../queries/gist';
 import { useAuthStore } from '../../stores/auth.store';
+import GistListContainer from './GistListContainer';
+import { Gist } from '../../types';
 
 type ViewMode = 'table' | 'card';
 
@@ -44,29 +43,17 @@ const TOTAL_PAGES = 6;
 function GistList() {
   const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [currentPage, setCurrentPage] = useState(1);
-
-  const [searchParams] = useSearchParams();
-  const search = searchParams.get('search') || '';
   const { data: gists, error, isLoading } = useGetGists(currentPage, TOTAL_PAGES);
   const { isAuthenticated } = useAuthStore();
 
-  if (isLoading)
-    return (
-      <div className={styles.gistListWrapper}>
-        <div className={styles.gistListBody}>
-          <GistLoader />
-        </div>
-      </div>
-    );
-
-  if (error)
-    return <div className={styles.error}>{error.message || 'Erro while fetching gists'}</div>;
-
-  const filteredGists = gists?.filter(
-    (gist) =>
-      search.trim() === '' ||
-      gist.owner?.login.toLowerCase().includes(search.toLowerCase()) ||
-      gist.description?.toLowerCase().includes(search.toLowerCase())
+  const renderGists = (filteredGists: Gist[]) => (
+    <>
+      {viewMode === 'table' ? (
+        <GistTable gists={filteredGists} showActions={isAuthenticated} />
+      ) : (
+        <GistCardList gists={filteredGists} showActions={isAuthenticated} />
+      )}
+    </>
   );
 
   return (
@@ -76,20 +63,19 @@ function GistList() {
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
       <div className={styles.gistListBody}>
-        {viewMode === 'table' ? (
-          <GistTable gists={filteredGists} showActions={isAuthenticated} />
-        ) : (
-          <GistCardList gists={filteredGists} showActions={isAuthenticated} />
-        )}
-      </div>
-      {!isLoading && (
-        <PaginationBar
-          className={viewMode === 'card' ? 'card-pagination' : ''}
+        <GistListContainer
+          gists={gists}
+          isLoading={isLoading}
+          error={error}
+          renderGists={renderGists}
           currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           totalPages={14}
-          onPageChange={setCurrentPage}
+          emptyMessage="No gists found"
+          errorClassName={styles.error}
+          paginationClassName={viewMode === 'card' ? 'card-pagination' : ''}
         />
-      )}
+      </div>
     </div>
   );
 }
