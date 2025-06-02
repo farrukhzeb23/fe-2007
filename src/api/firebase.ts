@@ -14,4 +14,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GithubAuthProvider();
 
+provider.addScope('gist');
+
 export { auth, provider, signInWithPopup, signOut };
